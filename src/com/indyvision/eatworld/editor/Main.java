@@ -15,20 +15,25 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import com.indyvision.eatworld.editor.handlers.BorderHandler;
+import com.indyvision.eatworld.editor.handlers.BorderHandler1;
+import com.indyvision.eatworld.editor.handlers.ObjectHandler;
+import com.indyvision.eatworld.editor.handlers.SelectHandler;
 import com.indyvision.eatworld.editor.pojo.EatWorldMap;
 import com.indyvision.eatworld.editor.pojo.MapObject;
 import com.indyvision.eatworld.editor.pojo.objects.LineSaw;
@@ -36,12 +41,27 @@ import com.indyvision.eatworld.editor.pojo.objects.Meteor;
 import com.indyvision.eatworld.editor.pojo.objects.Zoomer;
 
 public class Main extends Application {
+	public enum ActionType{
+		SELECT,
+		METEOR,
+		ZOOMER,
+		LINESAW,
+		BORDER, 
+		WALL
+	};
 	private EatWorldMap currentMap;
-	private Stage mainStage;
+	public Stage mainStage;
 	private BorderPane root;
-
+	public ActionType currentAction;
+	Canvas canvas;
+	EventHandler<MouseEvent> currentMouseHandler;
+	
 	TextArea statusText;
 
+	BorderHandler1 bHandler;
+	ObjectHandler oHandler;
+	SelectHandler sHandler;
+		
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -87,10 +107,14 @@ public class Main extends Application {
 					new Separator(Orientation.VERTICAL));
 
 			// canvas
-			Canvas canvas = new Canvas(1400, 800);
-			initCanvas(canvas);
+			canvas = new Canvas(1400, 800);
+			initCanvas();
 			ScrollPane sp = new ScrollPane();
 			sp.setContent(canvas);
+
+			bHandler = new BorderHandler1(canvas, this);
+			oHandler = new ObjectHandler(canvas, this);
+			sHandler = new SelectHandler(canvas, this);
 
 			// status
 			statusText = new TextArea();
@@ -99,7 +123,7 @@ public class Main extends Application {
 			vbox.setAlignment(Pos.BOTTOM_CENTER);
 			vbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
 					statusText);
-
+			
 			root = new BorderPane();
 			root.setTop(menuBar);
 			root.setRight(btn);
@@ -128,14 +152,9 @@ public class Main extends Application {
 
 	}
 
-	private void initCanvas(Canvas canvas) {
+	private void initCanvas() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		drawRulers(gc);
-		DragAndDropHandler handlerd = new DragAndDropHandler(canvas);
-		canvas.setOnMouseMoved(handlerd);
-		canvas.setOnMousePressed(handlerd);
-		canvas.setOnMouseReleased(handlerd);
-		canvas.setOnMouseDragged(handlerd);
 
 		// canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
 		// @Override
@@ -156,12 +175,19 @@ public class Main extends Application {
 	private void initObjectsPanel(VBox objectsPanel) {
 		objectsPanel.setPadding(new Insets(10));
 
+		final Label l = new Label("Select mode");
+
 		Button btnSelect = new Button();
 		btnSelect.setText("Select");
 		btnSelect.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.SELECT;
+				l.setText("Select mode");
+				canvas.setOnMouseMoved(sHandler);
+				canvas.setOnMousePressed(sHandler);
+				canvas.setOnMouseReleased(sHandler);
+				canvas.setOnMouseDragged(sHandler);
 			}
 		});
 		Button btnBorder = new Button();
@@ -169,7 +195,14 @@ public class Main extends Application {
 		btnBorder.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.BORDER;
+				l.setText("Border mode");
+				bHandler.clear();
+				canvas.setOnMouseMoved(bHandler);
+				canvas.setOnMousePressed(bHandler);
+				canvas.setOnMouseReleased(bHandler);
+				canvas.setOnMouseDragged(bHandler);
+
 			}
 		});
 		Button btnMeteor = new Button();
@@ -177,7 +210,12 @@ public class Main extends Application {
 		btnMeteor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.METEOR;
+				l.setText("Meteor mode");
+				canvas.setOnMouseMoved(oHandler);
+				canvas.setOnMousePressed(oHandler);
+				canvas.setOnMouseReleased(oHandler);
+				canvas.setOnMouseDragged(oHandler);
 			}
 		});
 		Button btnZoomer = new Button();
@@ -185,7 +223,8 @@ public class Main extends Application {
 		btnZoomer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.ZOOMER;
+				l.setText("Zoomer mode");
 			}
 		});
 		Button btnLinesaw = new Button();
@@ -193,7 +232,8 @@ public class Main extends Application {
 		btnLinesaw.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.LINESAW;
+				l.setText("Linesaw mode");
 			}
 		});
 		Button btnWall = new Button();
@@ -201,7 +241,8 @@ public class Main extends Application {
 		btnWall.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// System.out.println("Hello World!");
+				currentAction = ActionType.WALL;
+				l.setText("Wall mode");
 			}
 		});
 
@@ -213,7 +254,9 @@ public class Main extends Application {
 		btnLinesaw.setMaxWidth(Double.MAX_VALUE);
 
 		objectsPanel.getChildren().addAll(btnSelect, btnBorder, btnWall,
-				btnLinesaw, btnMeteor, btnZoomer);
+				btnLinesaw, btnMeteor, btnZoomer, l);
+		
+		currentAction = ActionType.SELECT;
 	}
 
 	private void initMenu(MenuBar menuBar) {
@@ -269,7 +312,7 @@ public class Main extends Application {
 
 	}
 
-	private void drawRulers(GraphicsContext gc) {
+	public void drawRulers(GraphicsContext gc) {
 
 		gc.setFill(Color.AZURE);
 		double canvasWidth = gc.getCanvas().getWidth();
