@@ -1,17 +1,15 @@
 package com.indyvision.eatworld.editor.pojo.objects;
 
-import javafx.geometry.Point2D;
-
 import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class LineSaw extends MapObject{
 	int speed;
 	int torque;
 	
-	public LineSaw(Point2D x, Point2D y, int speed, int torque) {
-		currentType = ObjectType.LINESAW;
-		xLoc = x;
-		yLoc = y;
+	public LineSaw(int x, int y, int speed, int torque) {
+		obj = ObjectType.LINESAW;
+		this.x = x;
+		this.y = y;
 		this.speed = speed;
 		this.torque = torque;
 	}

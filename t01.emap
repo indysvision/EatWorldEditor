@@ -1,0 +1,1 @@
+{"objects":[{"speed":3,"angle":80,"x":40,"y":50,"obj":"METEOR"},{"speed":2,"torque":40,"x":30,"y":10,"obj":"LINESAW"},{"resetDistance":1,"dampingRatio":20,"maxForce":33,"frequency":44,"x":60,"y":60,"obj":"ZOOMER"}],"level":{"border":[0,0,0,100,100,100,100,0]},"name":"test","fileName":"/Users/cristi/Desktop/repos/EatWorldEditor/t01.emap"}

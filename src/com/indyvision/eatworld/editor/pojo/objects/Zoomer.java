@@ -1,7 +1,5 @@
 package com.indyvision.eatworld.editor.pojo.objects;
 
-import javafx.geometry.Point2D;
-
 import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class Zoomer extends MapObject{
@@ -10,7 +8,10 @@ public class Zoomer extends MapObject{
     int maxForce;
     int frequency;
     
-    public Zoomer(Point2D x, Point2D y, int resetDistance, int dampingRatio, int maxForce, int frequency) {
+    public Zoomer(int x, int y, int resetDistance, int dampingRatio, int maxForce, int frequency) {
+    	this.obj = ObjectType.ZOOMER;
+    	this.x = x;
+    	this.y = y;
     	this.resetDistance = resetDistance;
     	this.dampingRatio = dampingRatio;
     	this.maxForce = maxForce;

@@ -1,7 +1,5 @@
 package com.indyvision.eatworld.editor.pojo.objects;
 
-import javafx.geometry.Point2D;
-
 import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class Meteor extends MapObject {
@@ -9,10 +7,10 @@ public class Meteor extends MapObject {
 	private int speed;
 	private int angle;	
 
-	public Meteor(Point2D x, Point2D y, int speed, int angle) {
-		currentType = ObjectType.METEOR;
-		xLoc = x;
-		yLoc = y;
+	public Meteor(int x, int y, int speed, int angle) {
+		obj = ObjectType.METEOR;
+		this.x = x;
+		this.y = y;
 		this.speed = speed;
 		this.angle = angle;
 	}

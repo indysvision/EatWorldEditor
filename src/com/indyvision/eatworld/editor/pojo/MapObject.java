@@ -19,31 +19,32 @@ public class MapObject {
 		}
 	};
 
-	protected Point2D xLoc, yLoc;
-	protected ObjectType currentType;
+	protected int x, y;
+	protected ObjectType obj;
 
-	public Point2D getxLoc() {
-		return xLoc;
+	public int getxLoc() {
+		return x;
 	}
 
-	public void setxLoc(Point2D xLoc) {
-		this.xLoc = xLoc;
+	public void setxLoc(int xLoc) {
+		this.x = xLoc;
+	}
+	
+
+	public int getyLoc() {
+		return y;
 	}
 
-	public Point2D getyLoc() {
-		return yLoc;
-	}
-
-	public void setyLoc(Point2D yLoc) {
-		this.yLoc = yLoc;
+	public void setyLoc(int yLoc) {
+		this.y = yLoc;
 	}
 
 	public ObjectType getCurrentType() {
-		return currentType;
+		return obj;
 	}
 
 	public void setCurrentType(ObjectType currentType) {
-		this.currentType = currentType;
+		this.obj = currentType;
 	}
 
 }
