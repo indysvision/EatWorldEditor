@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.indyvision.eatworld.editor.Main;
 import com.indyvision.eatworld.editor.pojo.objects.LineSaw;
 import com.indyvision.eatworld.editor.pojo.objects.Meteor;
 import com.indyvision.eatworld.editor.pojo.objects.Zoomer;
@@ -50,7 +51,7 @@ public class EatWorldMap {
 		return (new Gson()).toJson(this);
 	}
 	
-	public static EatWorldMap loadData(String fileName) {
+	public static EatWorldMap loadData(Main mainContext, String fileName) {
 		String everything = null;
 		BufferedReader br = null;
 		try {
@@ -92,17 +93,17 @@ public class EatWorldMap {
 			JsonObject object = obj.get(i).getAsJsonObject();
 			String type = object.get("obj").getAsString();
 			if (type.equals("METEOR")) {
-				map.objects.add(new Meteor(object.get("x").getAsInt(), object
+				map.objects.add(new Meteor(mainContext, object.get("x").getAsInt(), object
 						.get("y").getAsInt(), object.get("speed").getAsInt(),
 						object.get("angle").getAsInt()));
 			} else if (type.equals("ZOOMER")) {
-				map.objects.add(new Zoomer(object.get("x").getAsInt(), object
+				map.objects.add(new Zoomer(mainContext, object.get("x").getAsInt(), object
 						.get("y").getAsInt(), object.get("resetDistance").getAsInt(),
 						object.get("dampingRatio").getAsInt(), object.get("maxForce")
 								.getAsInt(), object.get("frequency").getAsInt()));
 			}
 			else if (type.equals("LINESAW")) {
-				map.objects.add(new LineSaw(object.get("x").getAsInt(), object
+				map.objects.add(new LineSaw(mainContext, object.get("x").getAsInt(), object
 						.get("y").getAsInt(), object.get("speed").getAsInt(),
 						object.get("torque").getAsInt()));
 			}

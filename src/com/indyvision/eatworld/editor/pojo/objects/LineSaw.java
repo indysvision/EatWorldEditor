@@ -10,14 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import com.indyvision.eatworld.editor.Main.ActionType;
+import com.indyvision.eatworld.editor.Main;
 import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class LineSaw extends MapObject {
 	int speed;
 	int torque;
 
-	public LineSaw(int x, int y, int speed, int torque) {
+	public LineSaw(Main context, int x, int y, int speed, int torque) {
+		super(context);
 		obj = ObjectType.LINESAW;
 		this.x = x;
 		this.y = y;
@@ -75,10 +76,16 @@ public class LineSaw extends MapObject {
 				
 			}
 		});
+
+		hb1.setMaxWidth(Double.MAX_VALUE);
+		hb2.setMaxWidth(Double.MAX_VALUE);
+		hb3.setMaxWidth(Double.MAX_VALUE);
+		hb4.setMaxWidth(Double.MAX_VALUE);
+
+		objectsPanel.getChildren().addAll(l, hb1, hb2, hb3, hb4, updateBtn);
 		
-		objectsPanel.getChildren().addAll(hb1, hb2, hb3, hb4, updateBtn);
-		objectsPanel.setMinWidth(230);
-		objectsPanel.setMaxWidth(230);
+//		objectsPanel.setMinWidth(250);
+//		objectsPanel.setMaxWidth(250);
 
 		return objectsPanel;
 	}

@@ -1,7 +1,8 @@
 package com.indyvision.eatworld.editor.pojo;
 
-import javafx.geometry.Point2D;
 import javafx.scene.layout.VBox;
+
+import com.indyvision.eatworld.editor.Main;
 
 public abstract class MapObject {
 	public enum ObjectType {
@@ -20,6 +21,11 @@ public abstract class MapObject {
 		}
 	};
 
+	protected Main mainContext;
+	public MapObject(Main context) {
+		this.mainContext = context;
+	}
+	
 	public abstract VBox loadObjectProperties();
 	protected int x, y;
 	protected ObjectType obj;

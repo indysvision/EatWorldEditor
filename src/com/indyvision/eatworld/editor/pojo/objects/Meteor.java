@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import com.indyvision.eatworld.editor.Main;
 import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class Meteor extends MapObject {
@@ -16,7 +17,8 @@ public class Meteor extends MapObject {
 	private int speed;
 	private int angle;	
 
-	public Meteor(int x, int y, int speed, int angle) {
+	public Meteor(Main context, int x, int y, int speed, int angle) {
+		super(context);
 		obj = ObjectType.METEOR;
 		this.x = x;
 		this.y = y;
@@ -48,22 +50,22 @@ public class Meteor extends MapObject {
 		final Label l = new Label("Properties meteor");
 
 		Label label1 = new Label("x:");
-		TextField textField1 = new TextField(String.valueOf(x));
+		final TextField textField1 = new TextField(String.valueOf(x));
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(label1, textField1);
 		hb1.setSpacing(10);
 		Label label2 = new Label("y:");
-		TextField textField2 = new TextField(String.valueOf(y));
+		final TextField textField2 = new TextField(String.valueOf(y));
 		HBox hb2 = new HBox();
 		hb2.getChildren().addAll(label2, textField2);
 		hb2.setSpacing(10);
 		Label label3 = new Label("speed:");
-		TextField textField3 = new TextField(String.valueOf(speed));
+		final TextField textField3 = new TextField(String.valueOf(speed));
 		HBox hb3 = new HBox();
 		hb3.getChildren().addAll(label3, textField3);
 		hb3.setSpacing(10);
 		Label label4 = new Label("angle:");
-		TextField textField4 = new TextField(String.valueOf(angle));
+		final TextField textField4 = new TextField(String.valueOf(angle));
 		HBox hb4 = new HBox();
 		hb4.getChildren().addAll(label4, textField4);
 		hb4.setSpacing(10);
@@ -72,13 +74,21 @@ public class Meteor extends MapObject {
 		updateBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
+				x = Integer.parseInt(textField1.getText());
+				y = Integer.parseInt(textField2.getText());
+				speed = Integer.parseInt(textField3.getText());
+				angle = Integer.parseInt(textField4.getText());	
+				mainContext.drawAll();
 			}
 		});
-		
-		objectsPanel.getChildren().addAll(hb1, hb2, hb3, hb4, updateBtn);
-		objectsPanel.setMinWidth(230);
-		objectsPanel.setMaxWidth(230);
+		hb1.setMaxWidth(Double.MAX_VALUE);
+		hb2.setMaxWidth(Double.MAX_VALUE);
+		hb3.setMaxWidth(Double.MAX_VALUE);
+		hb4.setMaxWidth(Double.MAX_VALUE);
+
+		objectsPanel.getChildren().addAll(l, hb1, hb2, hb3, hb4, updateBtn);
+//		objectsPanel.setMinWidth(250);
+//		objectsPanel.setMaxWidth(250);
 		return objectsPanel;	}	
 
 }
