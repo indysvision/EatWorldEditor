@@ -29,7 +29,7 @@ public class BorderHandler implements EventHandler<MouseEvent> {
 					.println("border pressed " + event.getSceneX() + ","
 							+ event.getSceneY() + " "
 							+ mainController.mainStage.getX());
-			mainController.drawRulers(gc);
+			mainController.drawRulers();
 
 			startX = event.getSceneX() - mainController.mainStage.getX();
 			startY = event.getSceneY() - mainController.mainStage.getY();
@@ -41,7 +41,7 @@ public class BorderHandler implements EventHandler<MouseEvent> {
 			// System.out.println("moved " + event.getSceneX() + ","
 			// + event.getSceneY());
 		} else if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-			mainController.drawRulers(canvas.getGraphicsContext2D());
+			mainController.drawRulers();
 
 			gc.setStroke(Color.BLUE);
 			gc.setLineWidth(5);

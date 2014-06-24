@@ -1,8 +1,9 @@
 package com.indyvision.eatworld.editor.pojo;
 
 import javafx.geometry.Point2D;
+import javafx.scene.layout.VBox;
 
-public class MapObject {
+public abstract class MapObject {
 	public enum ObjectType {
 		METEOR("meteor"), ZOOMER("zoomer"), LINESAW("lineSaw"), ENEMY_WALL(
 				"enemyWall");
@@ -19,6 +20,7 @@ public class MapObject {
 		}
 	};
 
+	public abstract VBox loadObjectProperties();
 	protected int x, y;
 	protected ObjectType obj;
 

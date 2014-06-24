@@ -41,27 +41,28 @@ import com.indyvision.eatworld.editor.pojo.objects.Meteor;
 import com.indyvision.eatworld.editor.pojo.objects.Zoomer;
 
 public class Main extends Application {
-	public enum ActionType{
-		SELECT,
-		METEOR,
-		ZOOMER,
-		LINESAW,
-		BORDER, 
-		WALL
+	public enum ActionType {
+		SELECT, METEOR, ZOOMER, LINESAW, BORDER, WALL
 	};
+
+	private GraphicsContext gc;
 	private EatWorldMap currentMap;
 	public Stage mainStage;
 	private BorderPane root;
 	public ActionType currentAction;
 	Canvas canvas;
 	EventHandler<MouseEvent> currentMouseHandler;
-	
+
+	public double leftSpace, topSpace;
+
 	TextArea statusText;
 
-	BorderHandler1 bHandler;
-	ObjectHandler oHandler;
-	SelectHandler sHandler;
-		
+	static BorderHandler1 bHandler;
+	static ObjectHandler oHandler;
+	static SelectHandler sHandler;
+
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -108,13 +109,14 @@ public class Main extends Application {
 
 			// canvas
 			canvas = new Canvas(1400, 800);
-			initCanvas();
-			ScrollPane sp = new ScrollPane();
-			sp.setContent(canvas);
 
 			bHandler = new BorderHandler1(canvas, this);
 			oHandler = new ObjectHandler(canvas, this);
 			sHandler = new SelectHandler(canvas, this);
+
+			initCanvas();
+			ScrollPane sp = new ScrollPane();
+			sp.setContent(canvas);
 
 			// status
 			statusText = new TextArea();
@@ -123,7 +125,7 @@ public class Main extends Application {
 			vbox.setAlignment(Pos.BOTTOM_CENTER);
 			vbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
 					statusText);
-			
+
 			root = new BorderPane();
 			root.setTop(menuBar);
 			root.setRight(btn);
@@ -132,10 +134,10 @@ public class Main extends Application {
 			root.setCenter(sp);
 
 			Scene mainScene = new Scene(root, 1200, 800);
-
 			primaryStage.setScene(mainScene);
-
 			primaryStage.show();
+			leftSpace = sp.getLayoutX();
+			topSpace = sp.getLayoutY();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,8 +155,8 @@ public class Main extends Application {
 	}
 
 	private void initCanvas() {
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		drawRulers(gc);
+		gc = canvas.getGraphicsContext2D();
+		drawRulers();
 
 		// canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
 		// @Override
@@ -174,7 +176,6 @@ public class Main extends Application {
 
 	private void initObjectsPanel(VBox objectsPanel) {
 		objectsPanel.setPadding(new Insets(10));
-
 		final Label l = new Label("Select mode");
 
 		Button btnSelect = new Button();
@@ -225,6 +226,10 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				currentAction = ActionType.ZOOMER;
 				l.setText("Zoomer mode");
+				canvas.setOnMouseMoved(oHandler);
+				canvas.setOnMousePressed(oHandler);
+				canvas.setOnMouseReleased(oHandler);
+				canvas.setOnMouseDragged(oHandler);
 			}
 		});
 		Button btnLinesaw = new Button();
@@ -234,6 +239,10 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				currentAction = ActionType.LINESAW;
 				l.setText("Linesaw mode");
+				canvas.setOnMouseMoved(oHandler);
+				canvas.setOnMousePressed(oHandler);
+				canvas.setOnMouseReleased(oHandler);
+				canvas.setOnMouseDragged(oHandler);
 			}
 		});
 		Button btnWall = new Button();
@@ -255,7 +264,7 @@ public class Main extends Application {
 
 		objectsPanel.getChildren().addAll(btnSelect, btnBorder, btnWall,
 				btnLinesaw, btnMeteor, btnZoomer, l);
-		
+
 		currentAction = ActionType.SELECT;
 	}
 
@@ -312,8 +321,13 @@ public class Main extends Application {
 
 	}
 
-	public void drawRulers(GraphicsContext gc) {
+	public void drawAll() {
+		drawRulers();
+		bHandler.drawAll();
+		oHandler.drawAll();
+	}
 
+	public void drawRulers() {
 		gc.setFill(Color.AZURE);
 		double canvasWidth = gc.getCanvas().getWidth();
 		double canvasHeight = gc.getCanvas().getHeight();
@@ -331,6 +345,7 @@ public class Main extends Application {
 						: 2, ((i % 5) == 0 && (j % 5) == 0) ? 4 : 2);
 			}
 		}
+
 		// gc.fillOval(10, 60, 30, 30);
 		// gc.strokeOval(60, 60, 30, 30);
 		// gc.fillRoundRect(110, 60, 30, 30, 10, 10);
@@ -350,7 +365,12 @@ public class Main extends Application {
 	}
 
 	private void onNewClicked() {
+		System.out.println("new");
+		bHandler = new BorderHandler1(canvas, this);
+		oHandler = new ObjectHandler(canvas, this);
+		sHandler = new SelectHandler(canvas, this);
 
+		initCanvas();
 	}
 
 	private void onLoadClicked() {
@@ -407,6 +427,10 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public void showProperties(MapObject currentObject) {
+		root.setRight(currentObject.loadObjectProperties());
 	}
 
 }
