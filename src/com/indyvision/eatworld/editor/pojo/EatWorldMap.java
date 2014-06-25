@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -52,7 +51,68 @@ public class EatWorldMap {
 		return (new Gson()).toJson(this);
 	}
 	
-	public static EatWorldMap loadData(Main mainContext, String fileName) {
+//	public static EatWorldMap loadData(Main mainContext, String fileName) {
+//		String everything = null;
+//		BufferedReader br = null;
+//		try {
+//			br = new BufferedReader(new FileReader(fileName));
+//			StringBuilder sb = new StringBuilder();
+//			String line = br.readLine();
+//
+//			while (line != null) {
+//				sb.append(line);
+//				sb.append(System.lineSeparator());
+//				line = br.readLine();
+//			}
+//			everything = sb.toString();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				br.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		System.out.println("pre conversed = \n" + everything);
+//		Gson gson = new Gson();
+//		EatWorldMap map = new EatWorldMap();
+//		map = gson.fromJson(everything, map.getClass());
+//		map.getObjects().clear(); // they are wrong so delete them
+//
+//		JsonParser parser = new JsonParser();
+//		JsonArray obj = parser.parse(everything).getAsJsonObject()
+//				.getAsJsonArray("objects");
+//		for (int i = 0; i < obj.size(); i++) {
+//			JsonObject object = obj.get(i).getAsJsonObject();
+//			String type = object.get("obj").getAsString();
+//			if (type.equals("METEOR")) {
+//				map.objects.add(new Meteor(object.get("x").getAsInt(), object
+//						.get("y").getAsInt(), object.get("speed").getAsInt(),
+//						object.get("angle").getAsInt()));
+//			} else if (type.equals("ZOOMER")) {
+//				map.objects.add(new Zoomer(object.get("x").getAsInt(), object
+//						.get("y").getAsInt(), object.get("resetDistance").getAsInt(),
+//						object.get("dampingRatio").getAsInt(), object.get("maxForce")
+//								.getAsInt(), object.get("frequency").getAsInt()));
+//			}
+//			else if (type.equals("LINESAW")) {
+//				map.objects.add(new LineSaw(object.get("x").getAsInt(), object
+//						.get("y").getAsInt(), object.get("speed").getAsInt(),
+//						object.get("torque").getAsInt()));
+//			}
+//		}
+//		System.out.println("conversed = \n" + gson.toJson(map));
+//		return map;
+//	}
+
+	public static EatWorldMap loadData1(Main mainContext, String fileName) {
 		String everything = null;
 		BufferedReader br = null;
 		try {
@@ -82,14 +142,26 @@ public class EatWorldMap {
 		}
 
 		System.out.println("pre conversed = \n" + everything);
-		Gson gson = new Gson();
-		EatWorldMap map = new EatWorldMap();
-		map = gson.fromJson(everything, map.getClass());
-		map.getObjects().clear(); // they are wrong so delete them
-
 		JsonParser parser = new JsonParser();
+		JsonArray levels = parser.parse(everything).getAsJsonObject()
+				.getAsJsonObject("level").getAsJsonArray("border");
 		JsonArray obj = parser.parse(everything).getAsJsonObject()
 				.getAsJsonArray("objects");
+
+		EatWorldMap map = new EatWorldMap();
+		
+		ArrayList<Point2D> vertices = new ArrayList<>(); 
+		for (int i = 0; i < levels.size(); i = i + 2) {
+			int x = levels.get(i).getAsInt();
+			int y = levels.get(i +1).getAsInt();
+			vertices.add(new Point2D(x, y));
+		}
+		map.setVertices(vertices);
+		
+//		Gson gson = new Gson();
+//		map = gson.fromJson(everything, map.getClass());
+//		map.getObjects().clear(); // they are wrong so delete them
+
 		for (int i = 0; i < obj.size(); i++) {
 			JsonObject object = obj.get(i).getAsJsonObject();
 			String type = object.get("obj").getAsString();
@@ -109,10 +181,11 @@ public class EatWorldMap {
 						object.get("torque").getAsInt()));
 			}
 		}
+		Gson gson = new Gson();
 		System.out.println("conversed = \n" + gson.toJson(map));
 		return map;
 	}
-
+	
 	public EatWorldMap() {
 		objects = new ArrayList<>();
 		// vertices = new ArrayList<>();
@@ -128,7 +201,12 @@ public class EatWorldMap {
 	}
 
 	public ArrayList<Point2D> getVertices() {
-		return null;
+		ArrayList<Point2D> result = new ArrayList<>();
+		int [] input = level.getBorder();
+		for (int i = 0; i < input.length; i = i + 2 ){
+			result.add(new Point2D(input[i], input[i+1]));
+		}
+		return result;
 	}
 
 	public void setVertices(ArrayList<Point2D> vertices) {

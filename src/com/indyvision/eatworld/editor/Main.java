@@ -91,7 +91,7 @@ public class Main extends Application {
 					testMap.setName("test");
 
 					testMap.writeData();
-					testMap = testMap.loadData(Main.this, testMap.getFileName());
+					testMap = testMap.loadData1(Main.this, testMap.getFileName());
 					// System.out.println("Hello World!");
 				}
 			});
@@ -390,8 +390,11 @@ public class Main extends Application {
 		// + file.getName());
 
 		if (file != null) {
-			currentMap = EatWorldMap.loadData(Main.this, file.getPath());
+			currentMap = EatWorldMap.loadData1(Main.this, file.getPath());
 			statusText.setText(currentMap.toJson());
+			bHandler.setPoints(currentMap.getVertices());
+			oHandler.objects = currentMap.getObjects();
+			drawAll();
 		}
 	}
 
@@ -439,7 +442,9 @@ public class Main extends Application {
 	}
 
 	public void showProperties(MapObject currentObject) {
-		root.setRight(currentObject.loadObjectProperties(Main.this));
+		if (currentObject != null){
+			root.setRight(currentObject.loadObjectProperties(Main.this));
+		}
 	}
 
 }

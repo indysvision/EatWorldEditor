@@ -155,4 +155,14 @@ public class BorderHandler1 implements EventHandler<MouseEvent> {
 		return result;
 	}
 
+	public void setPoints(ArrayList<Point2D> input){
+		xPoints = new ArrayList<>();
+		yPoints = new ArrayList<>();
+		for (int i = 0; i < input.size(); i++){
+			xPoints.add(input.get(i).getX());
+			yPoints.add(input.get(i).getY());
+		}
+	}
+
+	
 }
