@@ -17,8 +17,7 @@ public class Meteor extends MapObject {
 	private int speed;
 	private int angle;	
 
-	public Meteor(Main context, int x, int y, int speed, int angle) {
-		super(context);
+	public Meteor(int x, int y, int speed, int angle) {
 		obj = ObjectType.METEOR;
 		this.x = x;
 		this.y = y;
@@ -43,7 +42,7 @@ public class Meteor extends MapObject {
 	}
 
 	@Override
-	public VBox loadObjectProperties() {
+	public VBox loadObjectProperties(final Main mainContext) {
 		VBox objectsPanel = new VBox(8);
 		objectsPanel.setPadding(new Insets(10));
 

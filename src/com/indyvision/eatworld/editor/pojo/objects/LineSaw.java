@@ -17,8 +17,7 @@ public class LineSaw extends MapObject {
 	int speed;
 	int torque;
 
-	public LineSaw(Main context, int x, int y, int speed, int torque) {
-		super(context);
+	public LineSaw(int x, int y, int speed, int torque) {
 		obj = ObjectType.LINESAW;
 		this.x = x;
 		this.y = y;
@@ -42,7 +41,7 @@ public class LineSaw extends MapObject {
 		this.torque = torque;
 	}
 
-	public VBox loadObjectProperties() {
+	public VBox loadObjectProperties(final Main mainContext) {
 		VBox objectsPanel = new VBox(8);
 		objectsPanel.setPadding(new Insets(10));
 

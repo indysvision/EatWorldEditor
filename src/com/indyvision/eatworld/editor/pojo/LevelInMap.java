@@ -1,7 +1,11 @@
 package com.indyvision.eatworld.editor.pojo;
 
 public class LevelInMap {
-	private int [] border;
+	private int[] border;
+
+	public LevelInMap() {
+
+	}
 
 	public int[] getBorder() {
 		return border;
@@ -10,5 +14,5 @@ public class LevelInMap {
 	public void setBorder(int[] border) {
 		this.border = border;
 	}
-	
+
 }

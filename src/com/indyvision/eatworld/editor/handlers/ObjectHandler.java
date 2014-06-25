@@ -93,13 +93,13 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 				currentObject = null;
 				// new object
 				if (mainController.currentAction == ActionType.METEOR)
-					objects.add(new Meteor(mainController, ((int) currentX), ((int) currentY),
+					objects.add(new Meteor(((int) currentX), ((int) currentY),
 							0, 0));
 				else if (mainController.currentAction == ActionType.ZOOMER)
-					objects.add(new Zoomer(mainController, ((int) currentX), ((int) currentY),
+					objects.add(new Zoomer(((int) currentX), ((int) currentY),
 							0, 0, 0, 0));
 				else if (mainController.currentAction == ActionType.LINESAW)
-					objects.add(new LineSaw(mainController, ((int) currentX), ((int) currentY),
+					objects.add(new LineSaw(((int) currentX), ((int) currentY),
 							0, 0));
 			}
 

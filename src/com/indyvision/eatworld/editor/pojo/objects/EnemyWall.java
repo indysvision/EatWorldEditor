@@ -8,15 +8,14 @@ import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class EnemyWall extends MapObject{
 	
-	public EnemyWall(Main context,Point2D[] points) {
-		super(context);
+	public EnemyWall(Point2D[] points) {
 		obj = ObjectType.ENEMY_WALL;
 		x = (int) points[0].getX();
 		y = (int) points[0].getY();
 	}
 
 	@Override
-	public VBox loadObjectProperties() {
+	public VBox loadObjectProperties(Main mainContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}

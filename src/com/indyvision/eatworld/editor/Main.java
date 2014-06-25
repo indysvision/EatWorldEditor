@@ -84,9 +84,9 @@ public class Main extends Application {
 					verts.add(new Point2D(100, 0));
 					testMap.setVertices(verts);
 					ArrayList<MapObject> objs = new ArrayList<>();
-					objs.add(new Meteor(Main.this, 40, 50, 3, 80));
-					objs.add(new LineSaw(Main.this, 30, 10, 2, 40));
-					objs.add(new Zoomer(Main.this, 60, 60, 1, 20, 33, 44));
+					objs.add(new Meteor(40, 50, 3, 80));
+					objs.add(new LineSaw(30, 10, 2, 40));
+					objs.add(new Zoomer(60, 60, 1, 20, 33, 44));
 					testMap.setObjects(objs);
 					testMap.setName("test");
 
@@ -419,7 +419,7 @@ public class Main extends Application {
 				currentMap = new EatWorldMap();
 			}
 			currentMap.setFileName(file.getPath());
-//			updateCurrentMap();			
+			updateCurrentMap();			
 			currentMap.writeData();
 		}
 
@@ -439,7 +439,7 @@ public class Main extends Application {
 	}
 
 	public void showProperties(MapObject currentObject) {
-		root.setRight(currentObject.loadObjectProperties());
+		root.setRight(currentObject.loadObjectProperties(Main.this));
 	}
 
 }

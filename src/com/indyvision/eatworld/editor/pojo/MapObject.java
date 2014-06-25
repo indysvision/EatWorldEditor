@@ -21,12 +21,18 @@ public abstract class MapObject {
 		}
 	};
 
-	protected Main mainContext;
-	public MapObject(Main context) {
-		this.mainContext = context;
+	// protected Main mainContext;
+	// public MapObject(Main context) {
+	// this.mainContext = context;
+	// }
+
+	public MapObject() {
 	}
-	
-	public abstract VBox loadObjectProperties();
+
+	public VBox loadObjectProperties(Main context) {
+		return null;
+	}
+
 	protected int x, y;
 	protected ObjectType obj;
 
@@ -37,7 +43,6 @@ public abstract class MapObject {
 	public void setxLoc(int xLoc) {
 		this.x = xLoc;
 	}
-	
 
 	public int getyLoc() {
 		return y;

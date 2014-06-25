@@ -14,12 +14,11 @@ import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class Zoomer extends MapObject{
 	int resetDistance;
-    int dampingRatio;
-    int maxForce;
-    int frequency;
+	int dampingRatio;
+	int maxForce;
+	int frequency;
     
-    public Zoomer(Main context, int x, int y, int resetDistance, int dampingRatio, int maxForce, int frequency) {
-    	super(context);
+    public Zoomer(int x, int y, int resetDistance, int dampingRatio, int maxForce, int frequency) {
     	this.obj = ObjectType.ZOOMER;
     	this.x = x;
     	this.y = y;
@@ -62,7 +61,7 @@ public class Zoomer extends MapObject{
 	}
 
 	@Override
-	public VBox loadObjectProperties() {
+	public VBox loadObjectProperties(final Main mainContext) {
 		VBox objectsPanel = new VBox(8);
 		objectsPanel.setPadding(new Insets(10));
 
