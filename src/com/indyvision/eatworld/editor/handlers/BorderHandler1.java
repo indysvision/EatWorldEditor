@@ -3,6 +3,7 @@ package com.indyvision.eatworld.editor.handlers;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -144,6 +145,14 @@ public class BorderHandler1 implements EventHandler<MouseEvent> {
 			}
 		}
 
+	}
+	
+	public ArrayList<Point2D> getPoints(){
+		ArrayList<Point2D> result = new ArrayList<>();
+		for (int i = 0; i <xPoints.size(); i++){
+			result.add(new Point2D(xPoints.get(i), yPoints.get(i)));
+		}
+		return result;
 	}
 
 }

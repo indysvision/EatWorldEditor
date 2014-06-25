@@ -49,22 +49,22 @@ public class LineSaw extends MapObject {
 		final Label l = new Label("Properties linesaw");
 
 		Label label1 = new Label("x:");
-		TextField textField1 = new TextField(String.valueOf(x));
+		final TextField textField1 = new TextField(String.valueOf(x));
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(label1, textField1);
 		hb1.setSpacing(10);
 		Label label2 = new Label("y:");
-		TextField textField2 = new TextField(String.valueOf(y));
+		final TextField textField2 = new TextField(String.valueOf(y));
 		HBox hb2 = new HBox();
 		hb2.getChildren().addAll(label2, textField2);
 		hb2.setSpacing(10);
 		Label label3 = new Label("speed:");
-		TextField textField3 = new TextField(String.valueOf(speed));
+		final TextField textField3 = new TextField(String.valueOf(speed));
 		HBox hb3 = new HBox();
 		hb3.getChildren().addAll(label3, textField3);
 		hb3.setSpacing(10);
 		Label label4 = new Label("torque:");
-		TextField textField4 = new TextField(String.valueOf(torque));
+		final TextField textField4 = new TextField(String.valueOf(torque));
 		HBox hb4 = new HBox();
 		hb4.getChildren().addAll(label4, textField4);
 		hb4.setSpacing(10);
@@ -73,7 +73,12 @@ public class LineSaw extends MapObject {
 		updateBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
+				x = Integer.parseInt(textField1.getText());
+				y = Integer.parseInt(textField2.getText());
+				speed = Integer.parseInt(textField3.getText());
+				torque = Integer.parseInt(textField4.getText());	
+				mainContext.drawAll();
+
 			}
 		});
 

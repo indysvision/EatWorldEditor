@@ -21,7 +21,7 @@ import com.indyvision.eatworld.editor.pojo.objects.Zoomer;
 
 public class EatWorldMap {
 	private ArrayList<MapObject> objects;
-	// private ArrayList<Point2D> vertices;
+//	private ArrayList<Point2D> vertices;
 	LevelInMap level;
 	private String name;
 	private String fileName;

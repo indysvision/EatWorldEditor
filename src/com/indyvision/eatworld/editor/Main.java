@@ -415,10 +415,19 @@ public class Main extends Application {
 		if (file != null) {
 			System.out.println("path " + file.getPath() + ", filename "
 					+ file.getName());
+			if (currentMap == null){
+				currentMap = new EatWorldMap();
+			}
 			currentMap.setFileName(file.getPath());
+//			updateCurrentMap();			
 			currentMap.writeData();
 		}
 
+	}
+	
+	private void updateCurrentMap(){
+		currentMap.setVertices(bHandler.getPoints());
+		currentMap.setObjects(ObjectHandler.objects);
 	}
 
 	private void onRenameClicked() {
