@@ -18,7 +18,7 @@ public class LineSaw extends MapObject {
 	int torque;
 
 	public LineSaw(int x, int y, int speed, int torque) {
-		obj = ObjectType.LINESAW;
+		obj = ObjectType.lineSaw;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;

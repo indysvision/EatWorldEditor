@@ -14,11 +14,11 @@ import com.indyvision.eatworld.editor.pojo.MapObject;
 
 public class Meteor extends MapObject {
 
-	private int speed;
-	private int angle;	
+	private int speed = -99999;
+	private int angle = -99999;	
 
 	public Meteor(int x, int y, int speed, int angle) {
-		obj = ObjectType.METEOR;
+		obj = ObjectType.meteor;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
