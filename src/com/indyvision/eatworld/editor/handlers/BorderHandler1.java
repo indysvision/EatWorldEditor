@@ -164,5 +164,5 @@ public class BorderHandler1 implements EventHandler<MouseEvent> {
 		}
 	}
 
-	
+
 }

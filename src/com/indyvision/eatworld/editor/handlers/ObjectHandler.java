@@ -37,8 +37,8 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 			objects = new ArrayList<>();
 //		}
 		imgMeteor = new Image("file:meteorGrey_big1.png", 30, 30, true, true);
-		imgLineSaw = new Image("file:ufoBlue.png", 30, 30, true, true);
-		imgZoomer = new Image("file:ufoRed.png", 30, 30, true, true);
+		imgLineSaw = new Image("file:ufoRed.png", 30, 30, true, true);
+		imgZoomer = new Image("file:ufoBlue.png", 30, 30, true, true);
 
 	}
 
