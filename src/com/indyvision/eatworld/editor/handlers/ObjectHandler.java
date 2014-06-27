@@ -45,11 +45,11 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 	public void drawAll() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		for (MapObject obj : objects) {
-			if (obj.getCurrentType() == ObjectType.METEOR) {
+			if (obj.getCurrentType() == ObjectType.meteor) {
 				gc.drawImage(imgMeteor, obj.getxLoc(), obj.getyLoc());
-			} else if (obj.getCurrentType() == ObjectType.LINESAW) {
+			} else if (obj.getCurrentType() == ObjectType.lineSaw) {
 				gc.drawImage(imgLineSaw, obj.getxLoc(), obj.getyLoc());
-			} else if (obj.getCurrentType() == ObjectType.ZOOMER) {
+			} else if (obj.getCurrentType() == ObjectType.zoomer) {
 				gc.drawImage(imgZoomer, obj.getxLoc(), obj.getyLoc());
 			}
 		}
@@ -94,13 +94,13 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 				// new object
 				if (mainController.currentAction == ActionType.METEOR)
 					objects.add(new Meteor(((int) currentX), ((int) currentY),
-							0, 0));
+							-99999, -99999));
 				else if (mainController.currentAction == ActionType.ZOOMER)
 					objects.add(new Zoomer(((int) currentX), ((int) currentY),
-							0, 0, 0, 0));
+							 -99999,  -99999, -99999, -99999));
 				else if (mainController.currentAction == ActionType.LINESAW)
 					objects.add(new LineSaw(((int) currentX), ((int) currentY),
-							0, 0));
+							 -99999, -99999));
 			}
 
 			mainController.drawAll();
