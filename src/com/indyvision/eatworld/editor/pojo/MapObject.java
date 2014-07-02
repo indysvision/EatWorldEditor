@@ -7,7 +7,7 @@ import com.indyvision.eatworld.editor.Main;
 public abstract class MapObject {
 	public enum ObjectType {
 		meteor("meteor"), zoomer("zoomer"), lineSaw("lineSaw"), ENEMY_WALL(
-				"enemyWall");
+				"enemyWall"), swarm("swarm");
 
 		private String jsonCode;
 

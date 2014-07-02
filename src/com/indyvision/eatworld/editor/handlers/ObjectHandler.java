@@ -2,6 +2,7 @@ package com.indyvision.eatworld.editor.handlers;
 
 import java.util.ArrayList;
 
+import com.indyvision.eatworld.editor.pojo.objects.Swarm;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,6 +26,7 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 	Image imgMeteor;
 	Image imgLineSaw;
 	Image imgZoomer;
+    Image imgSwarm;
 
 	MapObject currentObject;
 
@@ -39,6 +41,7 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 		imgMeteor = new Image("file:meteorGrey_big1.png", 30, 30, true, true);
 		imgLineSaw = new Image("file:ufoRed.png", 30, 30, true, true);
 		imgZoomer = new Image("file:ufoBlue.png", 30, 30, true, true);
+        imgSwarm = new Image("file:laserBlue08.png", 30, 30, true, true);
 
 	}
 
@@ -51,7 +54,9 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 				gc.drawImage(imgLineSaw, obj.getxLoc(), obj.getyLoc());
 			} else if (obj.getCurrentType() == ObjectType.zoomer) {
 				gc.drawImage(imgZoomer, obj.getxLoc(), obj.getyLoc());
-			}
+			} else if (obj.getCurrentType() == ObjectType.swarm) {
+                gc.drawImage(imgSwarm, obj.getxLoc(), obj.getyLoc());
+            }
 		}
 
 	}
@@ -70,7 +75,8 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 
 			if (mainController.currentAction != ActionType.METEOR
 					&& mainController.currentAction != ActionType.LINESAW
-					&& mainController.currentAction != ActionType.ZOOMER) {
+					&& mainController.currentAction != ActionType.ZOOMER
+                    && mainController.currentAction != ActionType.SWARM) {
 				return;
 			}
 
@@ -95,7 +101,10 @@ public class ObjectHandler implements EventHandler<MouseEvent> {
 				if (mainController.currentAction == ActionType.METEOR)
 					objects.add(new Meteor(((int) currentX), ((int) currentY),
 							-99999, -99999));
-				else if (mainController.currentAction == ActionType.ZOOMER)
+                else if (mainController.currentAction == ActionType.SWARM)
+                    objects.add(new Swarm(((int) currentX), ((int) currentY),
+                            -99999, -99999, -99999));
+                else if (mainController.currentAction == ActionType.ZOOMER)
 					objects.add(new Zoomer(((int) currentX), ((int) currentY),
 							 -99999,  -99999, -99999, -99999));
 				else if (mainController.currentAction == ActionType.LINESAW)

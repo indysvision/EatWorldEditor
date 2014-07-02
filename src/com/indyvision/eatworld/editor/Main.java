@@ -42,7 +42,7 @@ import com.indyvision.eatworld.editor.pojo.objects.Zoomer;
 
 public class Main extends Application {
 	public enum ActionType {
-		SELECT, METEOR, ZOOMER, LINESAW, BORDER, WALL
+		SELECT, METEOR, ZOOMER, LINESAW, BORDER, WALL, SWARM
 	};
 
 	private GraphicsContext gc;
@@ -245,6 +245,19 @@ public class Main extends Application {
 				canvas.setOnMouseDragged(oHandler);
 			}
 		});
+        Button btnSwarm = new Button();
+        btnSwarm.setText("Swarm");
+        btnSwarm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                currentAction = ActionType.SWARM;
+                l.setText("Swarm mode");
+                canvas.setOnMouseMoved(oHandler);
+                canvas.setOnMousePressed(oHandler);
+                canvas.setOnMouseReleased(oHandler);
+                canvas.setOnMouseDragged(oHandler);
+            }
+        });
 		Button btnWall = new Button();
 		btnWall.setText("Enemy Wall");
 		btnWall.setOnAction(new EventHandler<ActionEvent>() {
@@ -259,11 +272,12 @@ public class Main extends Application {
 		btnBorder.setMaxWidth(Double.MAX_VALUE);
 		btnWall.setMaxWidth(Double.MAX_VALUE);
 		btnMeteor.setMaxWidth(Double.MAX_VALUE);
+        btnSwarm.setMaxWidth(Double.MAX_VALUE);
 		btnZoomer.setMaxWidth(Double.MAX_VALUE);
 		btnLinesaw.setMaxWidth(Double.MAX_VALUE);
 
 		objectsPanel.getChildren().addAll(btnSelect, btnBorder, btnWall,
-				btnLinesaw, btnMeteor, btnZoomer, l);
+				btnLinesaw, btnMeteor, btnZoomer, btnSwarm, l);
 
 		currentAction = ActionType.SELECT;
 	}
